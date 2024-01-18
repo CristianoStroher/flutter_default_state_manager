@@ -1,6 +1,7 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_default_state_manager/widgets/imc_gauge.dart';
+
+import '../widgets/imc_gauge.dart';
 
 class ImcSetstatePage extends StatefulWidget {
 
@@ -15,6 +16,7 @@ class _ImcSetstatePageState extends State<ImcSetstatePage> {
   // preciso recuperar os valores informados nos campos de peso e altura.
   final pesoEC = TextEditingController();
   final alturaEC = TextEditingController();
+  var imc = 0.0;
 
   // descartar os valores captados
   @override
@@ -34,7 +36,7 @@ class _ImcSetstatePageState extends State<ImcSetstatePage> {
               padding: const EdgeInsets.all(8),
               child: Column(
                 children: [
-                  const ImcGauge(imc: 0),
+                  ImcGauge(imc: imc),
                   const SizedBox(height: 20,),
                   TextFormField(
                     controller: pesoEC,
