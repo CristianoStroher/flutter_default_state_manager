@@ -21,7 +21,14 @@ class _ImcSetstatePageState extends State<ImcSetstatePage> {
   var imc = 0.0;
 
   //metodo que calcula o imc
-  void _calcularIMC({required double peso, required double altura}) {
+  Future<void> _calcularIMC({required double peso, required double altura}) async {
+
+    //criamos outro setstate para rebildar a pagina e voltar a zero antes de aplicar o novo comando
+    setState(() {
+      imc = 0;
+    });
+    await Future.delayed(const Duration(seconds: 1));
+
     // colocamos essa função setState que é a classe que chamamos para a pagina ser rebildada.
     setState(() {
       imc = peso / pow(altura, 2);
