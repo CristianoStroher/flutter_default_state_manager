@@ -1,8 +1,6 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_default_state_manager/widgets/imc_gauge.dart';
-import 'package:flutter_default_state_manager/widgets/imc_gauge_range.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class ImcSetstatePage extends StatefulWidget {
 
