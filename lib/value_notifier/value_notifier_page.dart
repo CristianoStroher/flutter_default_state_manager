@@ -5,10 +5,9 @@ import 'package:flutter_default_state_manager/widgets/imc_gauge.dart';
 import 'package:intl/intl.dart';
 
 class ValueNotifierPage extends StatefulWidget {
-
   const ValueNotifierPage({ super.key });
 
-  @override
+ @override
   State<ValueNotifierPage> createState() => _ValueNotifierPageState();
 }
 
