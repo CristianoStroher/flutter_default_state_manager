@@ -17,7 +17,24 @@ class _ValueNotifierPageState extends State<ValueNotifierPage> {
   final pesoEC = TextEditingController();
   final alturaEC = TextEditingController();
   final formkey = GlobalKey<FormState>();
-  var imc = 0.0;
+  //! 1 - no imc será uma classe ValueNotifier deste gerenciamento de estado e dentro vai receber o valor.
+  // var imc = 0.0; aantes
+  var imc = ValueNotifier(0.0);
+
+
+  //metodo que calcula o imc
+  Future<void> _calcularIMC(
+      {required double peso, required double altura}) async {
+    //criamos outro setstate para rebildar a pagina e voltar a zero antes de aplicar o novo comando
+    /* setState(() {
+      imc = 0;
+    });
+    await Future.delayed(const Duration(seconds: 1));
+    // colocamos essa função setState que é a classe que chamamos para a pagina ser rebildada.
+    setState(() {
+      imc = peso / pow(altura, 2);
+    }); */
+  }
 
   // descartar os valores captados
   @override
@@ -26,22 +43,6 @@ class _ValueNotifierPageState extends State<ValueNotifierPage> {
     alturaEC.dispose();
     super.dispose();
   }
-
-  //metodo que calcula o imc
-  Future<void> _calcularIMC(
-      {required double peso, required double altura}) async {
-    //criamos outro setstate para rebildar a pagina e voltar a zero antes de aplicar o novo comando
-    setState(() {
-      imc = 0;
-    });
-    await Future.delayed(const Duration(seconds: 1));
-
-    // colocamos essa função setState que é a classe que chamamos para a pagina ser rebildada.
-    setState(() {
-      imc = peso / pow(altura, 2);
-    });
-  }
-
 
    @override
    Widget build(BuildContext context) {
@@ -57,7 +58,13 @@ class _ValueNotifierPageState extends State<ValueNotifierPage> {
             padding: const EdgeInsets.all(8),
             child: Column(
               children: [
-                ImcGauge(imc: imc),
+                //!acrescentamos esse widged para encapsular o imcgauge
+                ValueListenableBuilder<double>(
+                  valueListenable:  imc, //quem ele fica escutando
+                  builder: ( _, imcValue, __) {
+                    return ImcGauge (imc: imcValue);
+                  },
+                ),
                 const SizedBox(
                   height: 20,
                 ),
