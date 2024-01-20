@@ -21,19 +21,24 @@ class _ValueNotifierPageState extends State<ValueNotifierPage> {
   // var imc = 0.0; aantes
   var imc = ValueNotifier(0.0);
 
-
+  //! aqui mudamos também porque não usamos o setstate
   //metodo que calcula o imc
   Future<void> _calcularIMC(
       {required double peso, required double altura}) async {
     //criamos outro setstate para rebildar a pagina e voltar a zero antes de aplicar o novo comando
-    /* setState(() {
-      imc = 0;
-    });
+    //!antes
+    // setState(() {
+    //   imc = 0;
+    // });
+    //! agora
+    imc.value = 0;
     await Future.delayed(const Duration(seconds: 1));
     // colocamos essa função setState que é a classe que chamamos para a pagina ser rebildada.
-    setState(() {
-      imc = peso / pow(altura, 2);
-    }); */
+    // setState(() {
+    //   imc = peso / pow(altura, 2);
+    // });
+    //!agora
+    imc.value = peso / pow(altura, 2);
   }
 
   // descartar os valores captados
