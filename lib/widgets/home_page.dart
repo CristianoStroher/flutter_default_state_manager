@@ -22,10 +22,10 @@ class HomePage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
              children: [
                ElevatedButton(
-                onPressed: () => _goToPage(context, const ImcSetstatePage()),
+                onPressed: () => _goToPage(context, ImcSetstatePage()),
                 child: const Text('SetState')),
                  ElevatedButton(
-                onPressed: () => _goToPage(context, const ValueNotifierPage()),
+                onPressed: () => _goToPage(context, ValueNotifierPage()),
                 child: const Text('ValueNotifier')
                 ),
                  ElevatedButton(

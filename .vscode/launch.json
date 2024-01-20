@@ -9,7 +9,9 @@
         {
             "name": "flutter_default_state_manager",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            // "flutterMode": "debug",
+            // "program": "lib/widgets/main.dart"
         },
         {
             "name": "flutter_default_state_manager (profile mode)",
