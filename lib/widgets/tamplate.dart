@@ -1,24 +1,32 @@
 import 'dart:math';
-
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_default_state_manager/widgets/imc_gauge.dart';
 import 'package:intl/intl.dart';
 
-import '../widgets/imc_gauge.dart';
-
 class ImcSetstatePage extends StatefulWidget {
-  const ImcSetstatePage({super.key});
+
+  const ImcSetstatePage({ super.key });
 
   @override
   State<ImcSetstatePage> createState() => _ImcSetstatePageState();
 }
 
 class _ImcSetstatePageState extends State<ImcSetstatePage> {
+
   // preciso recuperar os valores informados nos campos de peso e altura.
   final pesoEC = TextEditingController();
   final alturaEC = TextEditingController();
   final formkey = GlobalKey<FormState>();
   var imc = 0.0;
+
+  // descartar os valores captados
+  @override
+  void dispose() {
+    pesoEC.dispose();
+    alturaEC.dispose();
+    super.dispose();
+  }
 
   //metodo que calcula o imc
   Future<void> _calcularIMC(
@@ -35,17 +43,10 @@ class _ImcSetstatePageState extends State<ImcSetstatePage> {
     });
   }
 
-  // descartar os valores captados
-  @override
-  void dispose() {
-    pesoEC.dispose();
-    alturaEC.dispose();
-    super.dispose();
-  }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
+   @override
+   Widget build(BuildContext context) {
+       return Scaffold(
       appBar: AppBar(
         title: const Text('IMC SETSTATE'),
       ),
@@ -114,10 +115,11 @@ class _ImcSetstatePageState extends State<ImcSetstatePage> {
                           locale: 'pt_BR',
                           decimalDigits: 2,
                         );
-                        double peso = formater.parse(pesoEC.text) as double;
+                        double peso = formater.parse(pesoEC.text)
+                            as double;
                         double altura = formater.parse(alturaEC.text)
                             as double; //como o dado vem em string precisamos
-
+                        
                         _calcularIMC(peso: peso, altura: altura);
                       }
                     },
