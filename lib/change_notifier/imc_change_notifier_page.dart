@@ -46,7 +46,14 @@ class _ImcChangeNotifierPageState extends State<ImcChangeNotifierPage> {
             padding: const EdgeInsets.all(8),
             child: Column(
               children: [
-                ImcGauge(imc: controler.imc),
+                //!implementamos essa classe AnimateBuider para escutar a alteração
+                AnimatedBuilder(
+                  animation: controler, //!fica escutando o controler
+                  builder: (context, child) {
+                    return ImcGauge(imc: controler.imc);
+                  },
+                ),
+                
                 const SizedBox(
                   height: 20,
                 ),
