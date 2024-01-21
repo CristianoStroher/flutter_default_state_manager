@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_default_state_manager/change_notifier/imc_change_notifier_controler.dart';
 import 'package:flutter_default_state_manager/widgets/imc_gauge.dart';
 import 'package:intl/intl.dart';
 
@@ -14,11 +15,13 @@ class ImcChangeNotifierPage extends StatefulWidget {
 
 class _ImcChangeNotifierPageState extends State<ImcChangeNotifierPage> {
 
-  // preciso recuperar os valores informados nos campos de peso e altura.
+  //! isntaciamos a classe controler para buscar seus metodos
+  final controler = ImcChangeNotifierControler();
+  
   final pesoEC = TextEditingController();
   final alturaEC = TextEditingController();
   final formkey = GlobalKey<FormState>();
-  var imc = 0.0;
+  //! retiramos essa variável e colocamos na classe criada var imc = 0.0;
 
   // descartar os valores captados
   @override
@@ -43,7 +46,7 @@ class _ImcChangeNotifierPageState extends State<ImcChangeNotifierPage> {
             padding: const EdgeInsets.all(8),
             child: Column(
               children: [
-                ImcGauge(imc: imc),
+                ImcGauge(imc: controler.imc),
                 const SizedBox(
                   height: 20,
                 ),
@@ -105,8 +108,10 @@ class _ImcChangeNotifierPageState extends State<ImcChangeNotifierPage> {
                         double altura = formater.parse(alturaEC.text)
                             as double; //como o dado vem em string precisamos
                         
-                        //!Alteramos aqui
+                        //!Alteramos aqui adiconando a classe do metodos
                         // _calcularIMC(peso: peso, altura: altura);
+                        controler.calcularIMC(peso: peso, altura: altura);
+
                       }
                     },
                     child: const Text('Calcular IMC'))
