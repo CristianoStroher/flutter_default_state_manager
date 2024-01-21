@@ -4,42 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_default_state_manager/widgets/imc_gauge.dart';
 import 'package:intl/intl.dart';
 
-class ValueNotifierPage extends StatefulWidget {
-  const ValueNotifierPage({ super.key });
+class ImcSetstatePage extends StatefulWidget {
 
- @override
-  State<ValueNotifierPage> createState() => _ValueNotifierPageState();
+  const ImcSetstatePage({ super.key });
+
+  @override
+  State<ImcSetstatePage> createState() => _ImcSetstatePageState();
 }
 
-class _ValueNotifierPageState extends State<ValueNotifierPage> {
+class _ImcSetstatePageState extends State<ImcSetstatePage> {
 
   // preciso recuperar os valores informados nos campos de peso e altura.
   final pesoEC = TextEditingController();
   final alturaEC = TextEditingController();
   final formkey = GlobalKey<FormState>();
-  //! 1 - no imc será uma classe ValueNotifier deste gerenciamento de estado e dentro vai receber o valor.
-  // var imc = 0.0; aantes
-  var imc = ValueNotifier(0.0);
-
-  //! aqui mudamos também porque não usamos o setstate
-  //metodo que calcula o imc
-  Future<void> _calcularIMC(
-      {required double peso, required double altura}) async {
-    //criamos outro setstate para rebildar a pagina e voltar a zero antes de aplicar o novo comando
-    //!antes
-    // setState(() {
-    //   imc = 0;
-    // });
-    //! agora
-    imc.value = 0;
-    await Future.delayed(const Duration(seconds: 1));
-    // colocamos essa função setState que é a classe que chamamos para a pagina ser rebildada.
-    // setState(() {
-    //   imc = peso / pow(altura, 2);
-    // });
-    //!agora
-    imc.value = peso / pow(altura, 2);
-  }
+  var imc = 0.0;
 
   // descartar os valores captados
   @override
@@ -49,11 +28,27 @@ class _ValueNotifierPageState extends State<ValueNotifierPage> {
     super.dispose();
   }
 
+  //metodo que calcula o imc
+  Future<void> _calcularIMC(
+      {required double peso, required double altura}) async {
+    //criamos outro setstate para rebildar a pagina e voltar a zero antes de aplicar o novo comando
+    setState(() {
+      imc = 0;
+    });
+    await Future.delayed(const Duration(seconds: 1));
+
+    // colocamos essa função setState que é a classe que chamamos para a pagina ser rebildada.
+    setState(() {
+      imc = peso / pow(altura, 2);
+    });
+  }
+
+
    @override
    Widget build(BuildContext context) {
        return Scaffold(
       appBar: AppBar(
-        title: const Text('IMC VALUE NOTIFIER'),
+        title: const Text('IMC CHANGE NOTIFIER'),
       ),
       body: SingleChildScrollView(
         child: Form(
@@ -63,13 +58,7 @@ class _ValueNotifierPageState extends State<ValueNotifierPage> {
             padding: const EdgeInsets.all(8),
             child: Column(
               children: [
-                //!acrescentamos esse widged para encapsular o imcgauge
-                ValueListenableBuilder<double>(
-                  valueListenable:  imc, //quem ele fica escutando
-                  builder: ( _, imcValue, __) {
-                    return ImcGauge (imc: imcValue);
-                  },
-                ),
+                ImcGauge(imc: imc),
                 const SizedBox(
                   height: 20,
                 ),
