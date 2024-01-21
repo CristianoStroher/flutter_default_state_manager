@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_default_state_manager/widgets/imc_gauge.dart';
 import 'package:intl/intl.dart';
 
-class ImcSetstatePage extends StatefulWidget {
+class ImcChangeNotifierPage extends StatefulWidget {
 
-  const ImcSetstatePage({ super.key });
+  const ImcChangeNotifierPage({ super.key });
 
   @override
-  State<ImcSetstatePage> createState() => _ImcSetstatePageState();
+  State<ImcChangeNotifierPage> createState() => _ImcChangeNotifierPageState();
 }
 
-class _ImcSetstatePageState extends State<ImcSetstatePage> {
+class _ImcChangeNotifierPageState extends State<ImcChangeNotifierPage> {
 
   // preciso recuperar os valores informados nos campos de peso e altura.
   final pesoEC = TextEditingController();
@@ -27,23 +27,8 @@ class _ImcSetstatePageState extends State<ImcSetstatePage> {
     alturaEC.dispose();
     super.dispose();
   }
-
-  //metodo que calcula o imc
-  Future<void> _calcularIMC(
-      {required double peso, required double altura}) async {
-    //criamos outro setstate para rebildar a pagina e voltar a zero antes de aplicar o novo comando
-    setState(() {
-      imc = 0;
-    });
-    await Future.delayed(const Duration(seconds: 1));
-
-    // colocamos essa função setState que é a classe que chamamos para a pagina ser rebildada.
-    setState(() {
-      imc = peso / pow(altura, 2);
-    });
-  }
-
-
+  
+  //!1 - Removemos o calculo do imc
    @override
    Widget build(BuildContext context) {
        return Scaffold(
@@ -120,7 +105,8 @@ class _ImcSetstatePageState extends State<ImcSetstatePage> {
                         double altura = formater.parse(alturaEC.text)
                             as double; //como o dado vem em string precisamos
                         
-                        _calcularIMC(peso: peso, altura: altura);
+                        //!Alteramos aqui
+                        // _calcularIMC(peso: peso, altura: altura);
                       }
                     },
                     child: const Text('Calcular IMC'))
