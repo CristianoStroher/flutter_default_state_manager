@@ -1,8 +1,9 @@
 import 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_default_state_manager/bloc_pattern/imc_bloc_pattern_controller.dart';
+import 'package:flutter_default_state_manager/bloc_pattern/imc_state.dart';
 import 'package:flutter_default_state_manager/widgets/imc_gauge.dart';
 import 'package:intl/intl.dart';
+import 'imc_bloc_pattern_controller.dart';
 
 class ImcBlocPatternPage extends StatefulWidget {
 
@@ -44,7 +45,14 @@ class _ImcBlocPatternPageState extends State<ImcBlocPatternPage> {
             padding: const EdgeInsets.all(8),
             child: Column(
               children: [
-                const ImcGauge(imc: 0),
+                //!envolvemos o imcgauge com a streamuilde pra trabalhar com o stream
+                StreamBuilder<ImcState>(
+                  stream: controller.imcOut, //quem ele vai escutar
+                    builder: (context, snapshot) {
+                    var imc = snapshot.data?.imc ?? 0;
+                    return ImcGauge(imc: imc);
+                  },
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -106,7 +114,8 @@ class _ImcBlocPatternPageState extends State<ImcBlocPatternPage> {
                         double altura = formater.parse(alturaEC.text)
                             as double; //como o dado vem em string precisamos
                         
-                        // _calcularIMC(peso: peso, altura: altura);
+                        //!usamos o controller
+                        controller.calcularImc(peso: peso, altura: altura);
                       }
                     },
                     child: const Text('Calcular IMC'))
