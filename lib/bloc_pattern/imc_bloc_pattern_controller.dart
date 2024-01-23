@@ -14,10 +14,15 @@ Stream<ImcState> get imcOut => _imcStreamController.stream;
 
 //!inserir o calculo do imc
 Future<void> calcularImc ({ required double peso, required double altura}) async {
+  try {
   _imcStreamController.add(ImcStateLoading()); //extender loading
   await Future.delayed(const Duration(seconds: 1));
   final imc = peso / pow(altura, 2);
+  throw Exception();
   _imcStreamController.add(ImcState(imc: imc));
+} on Exception catch (e) {
+  _imcStreamController.add(ImcStateError(message: 'Erro ao calcular IMC'));
+}
   }
 
 //ela precisa ser fechada essa conexão

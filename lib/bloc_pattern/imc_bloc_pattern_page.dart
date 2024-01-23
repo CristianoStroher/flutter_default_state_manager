@@ -59,13 +59,18 @@ class _ImcBlocPatternPageState extends State<ImcBlocPatternPage> {
                 //! colocamos o loading que fica girando copiando a regra normal
                 StreamBuilder<ImcState>(
                   stream: controller.imcOut, //quem ele vai escutar
-                    builder: (context, snapshot) {
-                    return Visibility(
-                      visible: snapshot.data is ImcStateLoading,
-                      child: const Center(
-                        child: CircularProgressIndicator())
+                  builder: (context, snapshot) {
+                    final dataValue = snapshot.data;
+                    if(dataValue is ImcStateLoading ){
+                      return const Center(
+                        child: CircularProgressIndicator(),
                       ); // aqui entra o loading que aparece
-                  },
+                    }
+                    if(dataValue is ImcStateError) {
+                      return Text(dataValue.message);
+                    }
+                    return const SizedBox.shrink();
+                },               
                 ),
 
                 TextFormField(
