@@ -56,6 +56,18 @@ class _ImcBlocPatternPageState extends State<ImcBlocPatternPage> {
                 const SizedBox(
                   height: 20,
                 ),
+                //! colocamos o loading que fica girando copiando a regra normal
+                StreamBuilder<ImcState>(
+                  stream: controller.imcOut, //quem ele vai escutar
+                    builder: (context, snapshot) {
+                    return Visibility(
+                      visible: snapshot.data is ImcStateLoading,
+                      child: const Center(
+                        child: CircularProgressIndicator())
+                      ); // aqui entra o loading que aparece
+                  },
+                ),
+
                 TextFormField(
                   controller: pesoEC,
                   decoration: const InputDecoration(labelText: 'Peso'),

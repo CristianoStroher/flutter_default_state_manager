@@ -6,7 +6,7 @@ import 'package:flutter_default_state_manager/bloc_pattern/imc_state.dart';
 
 class ImcBlocPatternController {
 
-final _imcStreamController = StreamController<ImcState>()
+final _imcStreamController = StreamController<ImcState>.broadcast() //!criado para poder ouvir duas streams
   ..add(ImcState(imc: 0.0)); //instaciar uma StreamContrller escolhendo 
   //o tipo que é uma classe de estado e ja fazer ele inicar com um dado que é 0 (adiciona um valor a stream)
 Stream<ImcState> get imcOut => _imcStreamController.stream;
@@ -14,7 +14,7 @@ Stream<ImcState> get imcOut => _imcStreamController.stream;
 
 //!inserir o calculo do imc
 Future<void> calcularImc ({ required double peso, required double altura}) async {
-  _imcStreamController.add(ImcState(imc: 0.0));
+  _imcStreamController.add(ImcStateLoading()); //extender loading
   await Future.delayed(const Duration(seconds: 1));
   final imc = peso / pow(altura, 2);
   _imcStreamController.add(ImcState(imc: imc));
